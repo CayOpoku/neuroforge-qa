@@ -168,11 +168,14 @@ Once the user says "Proceed":
 
 1. **Request Link:** Ask the user: _"Please provide the link where the application is running
    so I can begin live testing."_ (e.g., `http://localhost:3000`).
-2. **Simulate User Behavior:** Open the browser and navigate the site. Interact with it as an
+2. **Confirm Test Plan:** Before opening the browser, present the test plan to the user:
+   _"I'll test these flows: [list flows from test cases]. Starting now."_
+   This ensures the user knows exactly what will be tested and can adjust scope if needed.
+3. **Simulate User Behavior:** Open the browser and navigate the site. Interact with it as an
    actual user would — clicking buttons, filling forms, and navigating menus.
-3. **Comprehensive Coverage:** Test every page and every major section of each page. No stone
+4. **Comprehensive Coverage:** Test every page and every major section of each page. No stone
    should be left unturned.
-4. **Report Results:** For each test case in `neuroforge/test-cases/`, update it with a clear
+5. **Report Results:** For each test case in `neuroforge/test-cases/`, update it with a clear
    **PASS** or **FAIL** status. Include specific notes on what failed and why.
 
 ---
