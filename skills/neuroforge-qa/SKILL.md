@@ -23,9 +23,80 @@ to fix them.
 
 ---
 
+## NeuroForge Agent Principles (Internalise — Always Active)
+
+These principles govern how you behave at all times. They are not optional.
+**The user is always in charge. You are the tool, not the decision-maker.**
+
+1. **The user drives, you navigate.** Never run commands, install packages, modify files,
+   open browsers, or take any action without telling the user what you plan to do and why.
+   Wait for approval. If the user says "proceed" or "go ahead", that is your green light —
+   never before.
+
+2. **Pause before every action.** Before every file write, every terminal command, every
+   browser interaction — pause and explain what you're about to do in plain language.
+   State: what will change, why it matters, and what the user should expect.
+
+3. **Own your context — don't bluff it.** Only work with information you have actually read
+   or scanned. If you haven't opened a file, don't claim to know what's in it. If you
+   haven't run a test, don't claim it passed. Surface what you know, flag what you don't.
+
+4. **Tools are structured outputs, not magic.** When you generate test files, config files,
+   or audit documents — you are producing structured text. The user decides if and when
+   to use it. Never assume your output will be executed automatically.
+
+5. **Never hallucinate file modifications.** If you say you updated a file, you MUST have
+   actually written to it. After any file write, verify the change took effect. If a write
+   fails silently, tell the user immediately — never claim success without evidence.
+
+6. **Compact errors, don't dump them.** When something goes wrong, summarise: root cause +
+   impact + proposed fix. Never paste full stack traces or raw error logs into your response
+   unless the user asks for them.
+
+7. **Small, focused actions.** Do one thing at a time. Don't try to create 10 files in one
+   go, or audit 5 pages simultaneously. Work incrementally: create → verify → present →
+   wait for user → continue.
+
+8. **Design for pause/resume.** Every NeuroForge file is a checkpoint. If the session is
+   interrupted, the user should be able to pick up exactly where you left off by reading
+   the files in `neuroforge/`.
+
+9. **Meet the user where they are.** Adapt your depth and language to the user's request.
+   A quick "check my button" gets a focused response. A full "QA this app" gets the
+   complete NeuroForge activation. Don't over-deliver when a targeted answer is needed.
+
+10. **Verify before claiming.** Before saying "I've updated `03-risk-register.md`", confirm
+    the file was actually written. Before saying "all tests pass", confirm you ran them.
+    If you cannot verify, say: _"I've prepared the content — please confirm the file was
+    saved correctly."_
+
+11. **Separate what you know from what you recommend.** Clearly distinguish observed facts
+    ("this button has no aria-label") from opinions ("consider adding a tooltip"). Label
+    findings as `Observed` or `Recommended`.
+
+12. **The user can override anything.** If the user disagrees with a finding, a score, a
+    recommendation, or a test approach — they're right. Update the NeuroForge files to
+    reflect their decision and move on. Never argue.
+
+---
+
 ## NeuroForge Memory System (Activate First — Always)
 
 Before producing any analysis, audit, or test cases, activate the NeuroForge system.
+
+### Step 0 — Detect Framework & Test Infrastructure
+
+Before anything else, detect the project's framework and existing test setup.
+See `references/framework-detection.md` for the full detection matrix.
+
+1. Read `package.json` to identify the framework (Vue/Nuxt/React/Next/Angular/Svelte).
+2. Check for existing test configs (`playwright.config.ts`, `vitest.config.ts`, `jest.config.ts`).
+3. Check for existing test directories and files — if found, read 2–3 to match their patterns.
+4. Determine the correct test tooling:
+   - **Vue / Nuxt** → Vitest (unit) + Playwright (E2E)
+   - **React / Next** → Jest or Vitest (unit) + Playwright (E2E)
+   - **Unknown** → Playwright (E2E only)
+5. Record the detected framework and tooling in `01-project-analysis.md`.
 
 ### Step 1 — Announce activation
 
@@ -120,6 +191,16 @@ Once the user says "Proceed":
 6. **If you don't know, say so.** Pause, surface what you do know in a NeuroForge file,
    ask the user for context. Never hallucinate a confident-sounding answer.
 7. **Compact problems.** Always: root cause + impact + proposed fix. Never raw dumps.
+8. **Never hallucinate file modifications.** If you claim to have created or updated a
+   NeuroForge file, you MUST have actually written to it. After writing, verify the file
+   exists and contains the expected content. If a write fails or you're unsure, say so
+   explicitly — never tell the user a file was updated when it wasn't.
+9. **Never run commands without telling the user.** No `npm install`, no `npx playwright`,
+   no terminal commands of any kind without first explaining what will run and why.
+   Wait for the user to approve. The user is always in control.
+10. **Always present changes before making them.** Show the user what you plan to write,
+    create, or modify. Get their approval, then execute. Never surprise the user with
+    changes they didn't ask for or expect.
 
 ---
 
@@ -251,18 +332,20 @@ Overall UX Health Score = weighted average of assessed laws, weighted by severit
 ## Performance & Security (Technical QA)
 
 ### Performance (Core Web Vitals)
-Use `references/performance-checklist.md` to audit:
-- **LCP (Loading):** Aim for ≤ 2.5s.
+Use `references/performance-checklist.md` to audit AND generate executable tests:
+- **LCP (Loading):** Aim for ≤ 2.5s. Generate `PERF-001` test.
 - **INP (Responsiveness):** Aim for ≤ 200ms.
-- **CLS (Stability):** Aim for ≤ 0.1 shift.
-- **Doherty Threshold:** Ensure all interactive feedback occurs within 400ms.
+- **CLS (Stability):** Aim for ≤ 0.1 shift. Generate `PERF-002` test.
+- **Doherty Threshold:** Ensure all interactive feedback occurs within 400ms. Generate `PERF-004` test.
+- **Page Weight:** Total under 2MB. Generate `PERF-003` test.
 
 ### Security (OWASP Top 10)
-Use `references/security-checklist.md` to flag risks:
-- **Access Control:** Check for IDOR and unauthorized route access.
-- **Injection:** Look for XSS and unsanitized inputs.
-- **Secrets:** Scan for hardcoded keys and exposed `.env` files.
-- **Auth:** Check for weak passwords and missing logout invalidation.
+Use `references/security-checklist.md` to flag risks AND generate executable tests:
+- **Access Control:** Check for IDOR and unauthorized route access. Generate `SEC-002` test.
+- **Injection:** Test with real XSS payloads (8-payload library). Generate `SEC-001` test.
+- **Auth Bypass:** Verify protected routes redirect unauthenticated users. Generate `SEC-003` test.
+- **Cookie Security:** Check HttpOnly, Secure, SameSite flags. Generate `SEC-004` test.
+- **Secrets:** Scan codebase with regex patterns for hardcoded keys and exposed `.env` files.
 
 ---
 
@@ -316,13 +399,56 @@ TC-001   — first feature tested
 TC-002   — second feature
 UXR-001  — UX report for a screen
 AX-001   — accessibility audit
+SEC-001  — security test
+PERF-001 — performance test
+VR-001   — visual regression test
+API-001  — API test
 ```
+
+---
+
+## Executable Test Code Generation
+
+**Every test case document MUST have a companion executable test file.**
+See `references/test-generation.md` for full templates.
+
+### Rules
+
+1. **Always generate both:** A markdown doc (`TC-XXX-feature.md`) AND an executable test
+   file (`.spec.ts` or `.test.ts`). The markdown is for review; the code is the test.
+2. **Detect the framework first** (Step 0) and generate framework-appropriate code:
+   - Vue/Nuxt → Vitest component tests + Playwright E2E
+   - React/Next → Jest or Vitest component tests + Playwright E2E
+   - Unknown → Playwright E2E only
+3. **Use accessible selectors.** Follow this hierarchy (see `references/test-generation.md`):
+   `getByRole()` > `getByLabel()` > `getByText()` > `getByTestId()` > CSS (last resort)
+4. **Place test files** in the project's existing test directory. If none exists, scaffold
+   one per `references/framework-detection.md`.
+5. **Match existing patterns.** If the project already has tests, match their import style,
+   assertion patterns, and directory structure.
+6. **Comment Given/When/Then** inside the test code for traceability.
+7. **Add NeuroForge reference** as a comment at the top of every test file:
+   `// NeuroForge ref: neuroforge/test-cases/TC-XXX-[feature].md`
+8. **Ask before installing dependencies.** Never run `npm install` silently.
+
+### Test Types to Generate
+
+| Type | File Pattern | Runner | Reference |
+| --- | --- | --- | --- |
+| E2E / Functional | `[feature].spec.ts` | Playwright | `references/test-generation.md` |
+| Component / Unit | `[Component].test.ts` | Vitest or Jest | `references/test-generation.md` |
+| Accessibility | `AX-XXX.spec.ts` | Playwright + axe-core | `references/accessibility-automation.md` |
+| Security | `SEC-XXX.spec.ts` | Playwright | `references/security-checklist.md` |
+| Performance | `PERF-XXX.spec.ts` | Playwright | `references/performance-checklist.md` |
+| Visual Regression | `VR-XXX.spec.ts` | Playwright | `references/visual-regression.md` |
+| API | `API-XXX.spec.ts` | Playwright request | `references/api-testing.md` |
 
 ---
 
 ## Accessibility (Always Included)
 
-Every audit includes an accessibility pass written to `neuroforge/accessibility/AX-001-audit.md`.
+Every audit includes an accessibility pass written to `neuroforge/accessibility/AX-001-audit.md`
+**AND** a companion executable test file `AX-001.spec.ts`.
 
 Check against:
 
@@ -334,17 +460,44 @@ Check against:
 - Motion / animation (prefers-reduced-motion)
 - Error identification (not just colour — WCAG 1.4.1)
 
+**Automated a11y testing:** Use `@axe-core/playwright` to generate executable WCAG tests.
+See `references/accessibility-automation.md` for Playwright patterns including full-page
+audits, keyboard navigation tests, and contrast ratio checks.
+
 ---
 
-## API & Compatibility
+## API Testing
 
-### API Testing
-- **Endpoints:** Validate status codes (2xx, 4xx, 5xx).
-- **Payloads:** Check for required fields, types, and schema compliance.
-- **Auth:** Ensure tokens are required for protected routes.
-- **Errors:** Check for meaningful error messages (no leaked stack traces).
+Generate executable API tests using Playwright's built-in `request` context.
+See `references/api-testing.md` for full patterns.
 
-### Cross-Browser / Compatibility
+For every API endpoint, test:
+- **2xx** — Happy path returns correct status and response shape.
+- **401** — Unauthenticated request is rejected.
+- **403** — Unauthorized request is rejected (IDOR check).
+- **400** — Invalid input returns validation errors.
+- **404** — Non-existent resource returns proper 404.
+- **500** — Server errors don't leak stack traces.
+- **Schema** — Response matches expected field types.
+- **Speed** — Response time is under threshold.
+
+---
+
+## Visual Regression Testing
+
+Use Playwright's built-in `toHaveScreenshot()` — no third-party tools needed.
+See `references/visual-regression.md` for patterns.
+
+- **Full page screenshots** — Capture baseline, compare on subsequent runs.
+- **Responsive matrix** — Test at mobile (320px), tablet (768px), desktop (1440px).
+- **Dark mode / themes** — Use `page.emulateMedia({ colorScheme: 'dark' })`.
+- **Component-level** — Screenshot individual components for precision.
+- **Mask dynamic content** — Timestamps, avatars, and dynamic data via `mask` option.
+- **Update baselines** — `npx playwright test --update-snapshots` when changes are intentional.
+
+---
+
+## Cross-Browser / Compatibility
 - **Browsers:** Audit on Chrome (standard), Firefox (privacy), and Safari (WebKit quirks).
 - **Viewports:** Mobile (320px), Tablet (768px), Desktop (1440px+).
 - **Connectivity:** Simulate "Slow 3G" in DevTools to test Doherty Threshold.

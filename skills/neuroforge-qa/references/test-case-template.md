@@ -11,6 +11,7 @@ Adapt format to the user's framework if specified (Playwright, Cypress, pytest, 
 **Feature:** [What is being tested]
 **Platform:** [Web / iOS / Android / API / Desktop / Any]
 **Framework:** [Plain language / Playwright / pytest / Jest / etc.]
+**Executable Test File:** `e2e/[feature-name].spec.ts` or `tests/[feature-name].test.ts`
 **NeuroForge ref:** [Link to related `02-ux-audit.md` finding or `03-risk-register.md` entry]
 **Date:** [Created / Last updated]
 **Status:** Draft / In Review / Approved
