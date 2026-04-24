@@ -307,3 +307,97 @@ Running log of all issues found across NeuroForge sessions. Never delete entries
 1. [Specific fix]
 2. [Specific fix]
 ```
+---
+
+## 06-security-audit.md
+
+```markdown
+# Security Audit (OWASP Top 10)
+
+**Project:** [Name]
+**Audit Date:** [Date]
+**Standards:** OWASP Top 10 2021
+**Tools:** [e.g. manual, Snyk, npm audit, Burp Suite]
+
+---
+
+## Executive Summary
+
+[Brief overview of security posture and critical risks]
+
+---
+
+## Critical Risks (Immediate Action Required)
+
+| ID | OWASP Category | Description | Severity | Recommendation |
+|----|----------------|-------------|----------|----------------|
+| S-001 | A01: Broken Access Control | [Description] | Critical | [Fix] |
+
+---
+
+## Findings by Category
+
+### A01: Broken Access Control
+- [Findings]
+
+### A03: Injection (XSS/SQLi)
+- [Findings]
+
+### A07: Identification and Authentication Failures
+- [Findings]
+
+---
+
+## Hardened Recommendations
+
+1. [Priority 1 fix]
+2. [Priority 2 fix]
+```
+
+---
+
+## 07-performance-audit.md
+
+```markdown
+# Performance Audit
+
+**Screen / Flow:** [Name]
+**Audit Date:** [Date]
+**Device/Network:** [e.g. Desktop / Slow 3G]
+
+---
+
+## Core Web Vitals Summary
+
+| Metric | Measured | Target | Status |
+|--------|----------|--------|--------|
+| **LCP** (Loading) | [N]s | ≤ 2.5s | [🟩/🟨/🟥] |
+| **INP** (Interaction) | [N]ms | ≤ 200ms | [🟩/🟨/🟥] |
+| **CLS** (Stability) | [N] | ≤ 0.1 | [🟩/🟨/🟥] |
+
+---
+
+## Performance Bottlenecks
+
+### 🔴 High Impact
+- **[Issue]:** [Description and evidence from network/lighthouse]
+- **Recommendation:** [Specific optimization]
+
+### 🟡 Medium Impact
+- **[Issue]:** [Description]
+
+---
+
+## Asset Analysis
+
+- **Total Page Weight:** [N] KB/MB
+- **Images:** [N] unoptimized assets found
+- **JavaScript:** [N] render-blocking scripts
+- **Caching:** [Status of headers]
+
+---
+
+## Doherty Threshold Validation
+
+- [Analysis of interaction feedback speed < 400ms]
+```

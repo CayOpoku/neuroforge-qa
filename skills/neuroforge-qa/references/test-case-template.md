@@ -14,6 +14,7 @@ Adapt format to the user's framework if specified (Playwright, Cypress, pytest, 
 **NeuroForge ref:** [Link to related `02-ux-audit.md` finding or `03-risk-register.md` entry]
 **Date:** [Created / Last updated]
 **Status:** Draft / In Review / Approved
+**Level:** Smoke / Sanity / Regression / Integration / Exploratory
 
 ---
 
@@ -36,7 +37,7 @@ Adapt format to the user's framework if specified (Playwright, Cypress, pytest, 
 - **When:** [User action or system event]
 - **Then:** [Expected outcome]
 - **Covers:** [Law / requirement / risk reference]
-- **Priority:** P1 / P2 / P3
+- **Priority:** P1 / P2 / P3 / P4
 - **Result:** ⬛ NOT TESTED / 🟩 PASS / 🟥 FAIL
 - **Notes:** [Any relevant context, platform caveats, etc.]
 

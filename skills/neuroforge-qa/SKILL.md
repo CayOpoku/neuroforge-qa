@@ -48,6 +48,8 @@ neuroforge/
   03-risk-register.md             ← Edge cases, accessibility risks, known failure modes
   04-qa-strategy.md               ← Test approach, coverage priorities, tools, environments
   05-findings-log.md              ← Ongoing log of defects and issues found across sessions
+  06-security-audit.md            ← OWASP Top 10 findings and risks
+  07-performance-audit.md         ← Core Web Vitals and load testing results
 
   test-cases/
     TC-001-[feature-name].md      ← One file per feature/flow being tested
@@ -201,6 +203,17 @@ See `references/laws.md` for full descriptions, watch-outs, and known conflict p
 
 ---
 
+## Behavioral Design & Persuasion
+
+Beyond usability, audit for behavioral influence using `references/behavioral-ux.md`:
+
+- **Fogg Behavior Model:** Map Behavior to Motivation, Ability, and Prompt (B=MAP).
+- **The Hook Model:** Trigger → Action → Variable Reward → Investment.
+- **Conversion Patterns:** Leverage Social Proof, Scarcity, Loss Aversion, and Smart Defaults.
+- **Cognitive Ease:** Use simple language and clear value propositions to reduce "Temporal Myopia".
+
+---
+
 ## UX Analysis Priorities
 
 **Always check first:**
@@ -235,6 +248,24 @@ Overall UX Health Score = weighted average of assessed laws, weighted by severit
 
 ---
 
+## Performance & Security (Technical QA)
+
+### Performance (Core Web Vitals)
+Use `references/performance-checklist.md` to audit:
+- **LCP (Loading):** Aim for ≤ 2.5s.
+- **INP (Responsiveness):** Aim for ≤ 200ms.
+- **CLS (Stability):** Aim for ≤ 0.1 shift.
+- **Doherty Threshold:** Ensure all interactive feedback occurs within 400ms.
+
+### Security (OWASP Top 10)
+Use `references/security-checklist.md` to flag risks:
+- **Access Control:** Check for IDOR and unauthorized route access.
+- **Injection:** Look for XSS and unsanitized inputs.
+- **Secrets:** Scan for hardcoded keys and exposed `.env` files.
+- **Auth:** Check for weak passwords and missing logout invalidation.
+
+---
+
 ## Test Case Generation & Execution
 
 When writing test cases (after "Proceed"), follow the template in `references/test-case-template.md`.
@@ -245,6 +276,24 @@ When writing test cases (after "Proceed"), follow the template in `references/te
 - **Pass/Fail Status:** Every test case MUST include a clear `Status: PASS` or `Status: FAIL`.
 - **User Simulation:** Interactions must mimic actual human usage (clicks, scrolls, typing).
 - **Full Coverage:** Audit every page and every section within those pages.
+
+### Testing Taxonomy (Levels)
+
+Categorize tests in `neuroforge/test-cases/` using these levels:
+- **Smoke:** Critical "must-work" path (e.g., Login, Checkout).
+- **Sanity:** Brief check of a specific fix or feature.
+- **Regression:** Full check of existing features after a change.
+- **Integration:** Testing data flow between modules or API/Frontend.
+- **Exploratory:** Unstructured testing to find edge cases.
+
+### Risk-Based Prioritization (P1–P4)
+
+| Level | Priority | Impact |
+| --- | --- | --- |
+| **P1** | **Critical** | Blocker; core feature broken; data loss; security breach. |
+| **P2** | **High** | Major feature degraded; UX law #1–5 significant violation. |
+| **P3** | **Medium** | Minor feature bug; polish issue; small UX violation. |
+| **P4** | **Low** | Suggestion; edge case with low likelihood. |
 
 ### Test Case Principles
 
@@ -284,6 +333,21 @@ Check against:
 - Touch targets (minimum 44×44px — Fitts's Law #7)
 - Motion / animation (prefers-reduced-motion)
 - Error identification (not just colour — WCAG 1.4.1)
+
+---
+
+## API & Compatibility
+
+### API Testing
+- **Endpoints:** Validate status codes (2xx, 4xx, 5xx).
+- **Payloads:** Check for required fields, types, and schema compliance.
+- **Auth:** Ensure tokens are required for protected routes.
+- **Errors:** Check for meaningful error messages (no leaked stack traces).
+
+### Cross-Browser / Compatibility
+- **Browsers:** Audit on Chrome (standard), Firefox (privacy), and Safari (WebKit quirks).
+- **Viewports:** Mobile (320px), Tablet (768px), Desktop (1440px+).
+- **Connectivity:** Simulate "Slow 3G" in DevTools to test Doherty Threshold.
 
 ---
 
