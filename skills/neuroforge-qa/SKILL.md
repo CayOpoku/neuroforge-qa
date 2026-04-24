@@ -80,12 +80,27 @@ and structured documentation. Present the NeuroForge files to the user for revie
 
 ### Step 5 — Present and wait
 
-Present the created/updated NeuroForge files clearly. End with:
-_"NeuroForge analysis complete. Say **Proceed** to generate test cases, or ask me to go deeper
+Present the created/updated NeuroForge files clearly. These findings must be based on codebase
+analysis and scanning WITHOUT opening the browser. End with:
+
+_"NeuroForge analysis complete. I have documented the project structure and initial test cases
+based on the codebase. Say **Proceed** to start live browser testing, or ask me to go deeper
 on any specific file, screen, or flow."_
 
-Do not generate test cases, code, or detailed reports until the user says "Proceed" or
-explicitly requests them.
+Do not open the browser or execute live tests until the user says "Proceed".
+
+### Step 6 — Live Browser Testing (On "Proceed")
+
+Once the user says "Proceed":
+
+1. **Request Link:** Ask the user: _"Please provide the link where the application is running
+   so I can begin live testing."_ (e.g., `http://localhost:3000`).
+2. **Simulate User Behavior:** Open the browser and navigate the site. Interact with it as an
+   actual user would — clicking buttons, filling forms, and navigating menus.
+3. **Comprehensive Coverage:** Test every page and every major section of each page. No stone
+   should be left unturned.
+4. **Report Results:** For each test case in `neuroforge/test-cases/`, update it with a clear
+   **PASS** or **FAIL** status. Include specific notes on what failed and why.
 
 ---
 
@@ -114,13 +129,17 @@ explicitly requests them.
    End with: _"Want me to activate NeuroForge and go deep?"_
 2. **NeuroForge Deep Audit** (on "Proceed" or explicit request): full folder creation + law-by-law
    breakdown written to `neuroforge/02-ux-audit.md` and `neuroforge/ux-reports/`.
-3. **Test Case Generation** (on "Proceed" or explicit request): written to `neuroforge/test-cases/`.
+3. **Test Case Generation & Live Testing** (on "Proceed"):
+   - Ask for application link.
+   - Perform live browser testing of all pages/sections as a user.
+   - Write/Update test cases to `neuroforge/test-cases/` with PASS/FAIL results.
 
 ### For any QA/testing input:
 
 1. **Quick Summary**: scope of coverage, most critical gaps, overall risk level.
 2. **NeuroForge Analysis**: project scan → `01-project-analysis.md` + `04-qa-strategy.md`.
-3. **Test Cases**: written to `neuroforge/test-cases/TC-XXX-[feature].md`.
+3. **Test Cases & Live Results**: written to `neuroforge/test-cases/TC-XXX-[feature].md`
+   with PASS/FAIL status after browser execution.
 
 ### Clarifying questions: always at the end, never as a blocker. Max 3 at a time.
 
@@ -216,9 +235,16 @@ Overall UX Health Score = weighted average of assessed laws, weighted by severit
 
 ---
 
-## Test Case Generation
+## Test Case Generation & Execution
 
 When writing test cases (after "Proceed"), follow the template in `references/test-case-template.md`.
+
+### Execution & Reporting
+
+- **Live Validation:** Every test case must be validated in the browser using the provided link.
+- **Pass/Fail Status:** Every test case MUST include a clear `Status: PASS` or `Status: FAIL`.
+- **User Simulation:** Interactions must mimic actual human usage (clicks, scrolls, typing).
+- **Full Coverage:** Audit every page and every section within those pages.
 
 ### Test Case Principles
 

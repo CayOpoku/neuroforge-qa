@@ -19,12 +19,12 @@ Adapt format to the user's framework if specified (Playwright, Cypress, pytest, 
 
 ## Coverage Map
 
-| Quadrant           | Count | Status   |
-| ------------------ | ----- | -------- |
-| Happy Path         | N     | ⬜ Draft |
-| Edge Cases         | N     | ⬜ Draft |
-| Error States       | N     | ⬜ Draft |
-| UX / Accessibility | N     | ⬜ Draft |
+| Quadrant           | Count | Status   | Result (P/F) |
+| ------------------ | ----- | -------- | ------------ |
+| Happy Path         | N     | ⬜ Draft | ⬛ -          |
+| Edge Cases         | N     | ⬜ Draft | ⬛ -          |
+| Error States       | N     | ⬜ Draft | ⬛ -          |
+| UX / Accessibility | N     | ⬜ Draft | ⬛ -          |
 
 ---
 
@@ -37,6 +37,7 @@ Adapt format to the user's framework if specified (Playwright, Cypress, pytest, 
 - **Then:** [Expected outcome]
 - **Covers:** [Law / requirement / risk reference]
 - **Priority:** P1 / P2 / P3
+- **Result:** ⬛ NOT TESTED / 🟩 PASS / 🟥 FAIL
 - **Notes:** [Any relevant context, platform caveats, etc.]
 
 ### TC-XXX-002 — [Short descriptive name]
@@ -46,6 +47,7 @@ Adapt format to the user's framework if specified (Playwright, Cypress, pytest, 
 - **Then:**
 - **Covers:**
 - **Priority:**
+- **Result:**
 
 _(Add as many as needed)_
 
@@ -60,6 +62,7 @@ _(Add as many as needed)_
 - **Then:**
 - **Covers:**
 - **Priority:**
+- **Result:**
 - **Notes:** [Boundary condition, large input, empty state, concurrent user, etc.]
 
 _(Common edge cases to consider: empty state, max-length input, special characters,
@@ -76,6 +79,7 @@ slow network, expired session, concurrent modification, unsupported browser/devi
 - **Then:** [Expected error message, recovery path, no data leak]
 - **Covers:**
 - **Priority:**
+- **Result:**
 
 _(Common error states: 400/401/403/404/500 responses, validation failures, network offline,
 timeout, race condition, partial failure, retry behaviour)_
@@ -123,6 +127,7 @@ timeout, race condition, partial failure, retry behaviour)_
 - **Then:** No overflow, no broken layout, primary actions always reachable
 - **Covers:** Cognitive Load (#5), Jakob's Law (#11)
 - **Priority:** P2
+- **Result:**
 
 _(Add UX-specific tests as needed — law violations found in the UX audit become test cases here)_
 
