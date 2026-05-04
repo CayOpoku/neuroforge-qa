@@ -401,3 +401,46 @@ Running log of all issues found across NeuroForge sessions. Never delete entries
 
 - [Analysis of interaction feedback speed < 400ms]
 ```
+
+---
+
+## finding-logs/LOG-001-[issue-name].md
+
+```markdown
+# Finding Log: [Issue Name]
+
+**ID:** LOG-XXX
+**Related Finding:** [F-XXX]
+**Date:** [Date]
+**Environment:** [e.g. Chrome 124, Windows 11]
+
+---
+
+## Technical Details
+
+[Detailed technical description of the finding, including network requests, console errors, or specific DOM state]
+
+## Evidence / Logs
+
+```text
+[Paste raw log data, console output, or stack traces here]
+```
+
+## Reproduction Steps
+
+1. [Step 1]
+2. [Step 2]
+3. [Step 3]
+
+## Impact Analysis
+
+[Deep dive into the impact of this specific finding]
+
+---
+
+## Verification Status
+
+- [ ] Issue Reproduced
+- [ ] Log Evidence Captured
+- [ ] Fix Verified (if applicable)
+```

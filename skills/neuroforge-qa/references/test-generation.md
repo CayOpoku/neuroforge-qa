@@ -317,3 +317,7 @@ describe('Dashboard Page — [TC-XXX]', async () => {
    in the same file.
 8. **Link to NeuroForge docs.** Add a comment at the top of each test file:
    `// NeuroForge ref: neuroforge/test-cases/TC-XXX-[feature].md`
+9. **No Implementation Code.** Never generate application code (e.g., components, utilities,
+   logic) in a test file. Only generate test code.
+10. **Consent Required.** Never create or modify a test file without presenting the proposed
+    content to the user and receiving explicit approval.
